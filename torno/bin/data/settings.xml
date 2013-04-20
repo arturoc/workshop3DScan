@@ -1,0 +1,10 @@
+<group>
+    <near>1</near>
+    <far>100</far>
+    <y>-1095</y>
+    <z>614.41</z>
+    <topLookAt>0, 1, 0</topLookAt>
+    <topUp>0, 0, 1</topUp>
+    <selectionSide>100</selectionSide>
+    <camtopPos>30.6122, -238.776, 653.061</camtopPos>
+</group>

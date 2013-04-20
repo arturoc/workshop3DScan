@@ -1,0 +1,3 @@
+ofxKinect
+ofxGui
+ofxXmlSettings
