@@ -43,6 +43,7 @@ void testApp::setup(){
 	gui.add(topUp.set("topUp",ofVec3f(0,-1,0),ofVec3f(-1,-1,-1),ofVec3f(1,1,1)));
 	gui.add(selectionSide.set("selectionSide",100,50,500));
 	gui.add(angle.set("angle",0,0,360));
+	gui.add(triMeshThreshold.set("triMeshThreshold",100,10,1000));
 
 	selectionSide.addListener(this,&testApp::selectionSideChanged);
 
@@ -84,7 +85,38 @@ void testApp::update(){
 										kinect.getPixelsRef()[i*3+2]);*/
 			}
 		}
+
+
+		triMesh.clear();
+		triMesh = mesh;
+		for(int y=0;y<480-1;y++){
+			for(int x=0;x<640-1;x++,i++){
+				ofVec3f v1 = mesh.getVertex(y*640+x);
+				ofVec3f v2 = mesh.getVertex((y+1)*640+x);
+				ofVec3f v3 = mesh.getVertex((y+1)*640+(x+1));
+				if(v1.squareDistance(v2)<triMeshThreshold &&
+				   v2.squareDistance(v3)<triMeshThreshold &&
+				   v1.squareDistance(v3)<triMeshThreshold ){
+					triMesh.addIndex(y*640+x);
+					triMesh.addIndex((y+1)*640+x);
+					triMesh.addIndex((y+1)*640+(x+1));
+
+				}
+				v1 = mesh.getVertex(y*640+x);
+				v2 = mesh.getVertex(y*640+(x+1));
+				v3 = mesh.getVertex((y+1)*640+(x+1));
+				if(v1.squareDistance(v2)<triMeshThreshold &&
+				   v2.squareDistance(v3)<triMeshThreshold &&
+				   v1.squareDistance(v3)<triMeshThreshold ){
+					triMesh.addIndex(y*640+x);
+					triMesh.addIndex(y*640+(x+1));
+					triMesh.addIndex((y+1)*640+(x+1));
+
+				}
+			}
+		}
 	}
+
 
 	camTop.resetTransform();
 	camTop.move(camtopPos);
@@ -102,9 +134,9 @@ void testApp::draw(){
 	kinect.drawDepth(gui.getWidth()+20,0,320,240);
 	kinect.draw(gui.getWidth()+20+320,0,320,240);
 	camFront.begin(viewportFront);
-	//kinect.getTextureReference().bind();
-	addMesh.draw();
-	//kinect.getTextureReference().unbind();
+	kinect.getTextureReference().bind();
+	triMesh.draw();
+	kinect.getTextureReference().unbind();
 	glDisable(GL_DEPTH_TEST);
 	selectionQuad.draw();
 	ofSetColor(255,0,0);
@@ -143,11 +175,6 @@ void testApp::draw(){
 void testApp::keyPressed(int key){
 	cout << "key pressed" << endl;
 	if(key==' '){
-		for(int i=0;i<(int)mesh.getVertices().size();i++){
-			if(mesh.getVertex(i).z>nearClip && mesh.getVertex(i).z<farClip){
-				addMesh.addVertex(mesh.getVertex(i));
-			}
-		}
 		rotationMat.makeIdentityMatrix();
 		rotationMat.rotate(numTurns*steps*360./float(stepsOneTurn),0,1,0);
 		ofVec3f center(camtopPos->x,0,camtopPos->z);
@@ -155,14 +182,14 @@ void testApp::keyPressed(int key){
 			ofVec3f v = mesh.getVertex(i)-center;
 			if(v.x>-selectionSide && v.x<selectionSide && v.z>-selectionSide && v.z<selectionSide) {
 				v = rotationMat*v;
-				bool found=false;
+				/*bool found=false;
 				for(int j=0;j<addMesh.getVertices().size();j++){
 					if(v.squareDistance(addMesh.getVertex(j))<10){
 						found =true;
 						break;
 					}
-				}
-				if(!found)
+				}*/
+				//if(!found)
 					addMesh.addVertex(v);
 			}
 		}
@@ -174,6 +201,7 @@ void testApp::keyPressed(int key){
 	}
 	if(key=='s'){
 		addMesh.save("mesh.ply");
+		triMesh.save("triMesh.ply");
 	}
 
 	if(key==OF_KEY_LEFT){

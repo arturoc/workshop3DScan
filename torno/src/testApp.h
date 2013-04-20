@@ -35,13 +35,29 @@ class testApp : public ofBaseApp{
 		ofParameter<ofVec3f> topLookAt, topUp;
 		ofParameter<int> selectionSide;
 		ofParameter<float> angle;
+		ofParameter<float> triMeshThreshold;
 		ofxPanel gui;
 		ofVboMesh addMesh;
 		ofVboMesh selectionQuad;
 		ofVboMesh center;
+		ofVboMesh triMesh;
 
 		int steps;
 		int stepsOneTurn;
 		int numTurns;
 		ofMatrix4x4 rotationMat;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
