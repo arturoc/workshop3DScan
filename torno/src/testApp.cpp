@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void testApp::setup(){
 	ofSetVerticalSync(true);
-	serial.setup("/dev/ttyUSB0",9600);
+	serial.setup("/dev/ttyACM3",9600);
 	kinect.init();
 	kinect.open();
 	kinect.setRegistration(true);
@@ -134,9 +134,10 @@ void testApp::draw(){
 	kinect.drawDepth(gui.getWidth()+20,0,320,240);
 	kinect.draw(gui.getWidth()+20+320,0,320,240);
 	camFront.begin(viewportFront);
-	kinect.getTextureReference().bind();
+	/*kinect.getTextureReference().bind();
 	triMesh.draw();
-	kinect.getTextureReference().unbind();
+	kinect.getTextureReference().unbind();*/
+	addMesh.draw();
 	glDisable(GL_DEPTH_TEST);
 	selectionQuad.draw();
 	ofSetColor(255,0,0);
@@ -176,7 +177,7 @@ void testApp::keyPressed(int key){
 	cout << "key pressed" << endl;
 	if(key==' '){
 		rotationMat.makeIdentityMatrix();
-		rotationMat.rotate(numTurns*steps*360./float(stepsOneTurn),0,1,0);
+		rotationMat.rotate(-numTurns*steps*360./float(stepsOneTurn),0,1,0);
 		ofVec3f center(camtopPos->x,0,camtopPos->z);
 		for(int i=0;i<(int)mesh.getVertices().size();i++){
 			ofVec3f v = mesh.getVertex(i)-center;
@@ -196,7 +197,8 @@ void testApp::keyPressed(int key){
 
 		//camFront.setTarget(addMesh.getCentroid());
 		numTurns++;
-		serial.writeByte((unsigned char)steps);
+		cout << steps << endl;
+		serial.writeByte(10);
 		angle = numTurns*steps*360./float(stepsOneTurn);
 	}
 	if(key=='s'){
