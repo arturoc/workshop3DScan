@@ -1,0 +1,25 @@
+OF Addons
+=========
+
+ofxGrayCode: https://github.com/elliotwoods/ofxGraycode
+ofxRay: https://github.com/elliotwoods/ofxRay
+ofxTriangulate: https://github.com/elliotwoods/ofxTriangulate
+ofxKinect: http://github.com/ofTheo/ofxKinect
+
+Other software:
+==============
+skanect: http://skanect.manctl.com/
+reconstructme: http://reconstructme.net/
+david scanner: http://www.david-laserscanner.com/
+123d catch: http://www.123dapp.com/catch
+mapamok: https://github.com/YCAMInterlab/ProCamToolkit/wiki/mapamok-%28English%29
+madmapper: http://www.madmapper.com/
+
+Historical References:
+=====================
+
+- Photo sclupture - Adams (1939): http://www.britishpathe.com/video/photo-sculpture/query/Marcus
+- Photo sculpture - Willeme (1856): http://image.eastmanhouse.org/files/GEH_1958_07_05.pdf
+- Displacements - Naimark (1977): http://www.naimark.net/projects/displacements.html
+
+
