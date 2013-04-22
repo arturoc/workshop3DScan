@@ -6,6 +6,10 @@ ofxRay: https://github.com/elliotwoods/ofxRay
 ofxTriangulate: https://github.com/elliotwoods/ofxTriangulate
 ofxKinect: http://github.com/ofTheo/ofxKinect
 
+Meshlab:
+=======
+point cloud to mesh: http://meshlabstuff.blogspot.com.es/2009/09/meshing-point-clouds.html
+
 Other software:
 ==============
 skanect: http://skanect.manctl.com/
